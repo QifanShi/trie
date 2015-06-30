@@ -5,7 +5,7 @@ package Trie;
  * The class contains three methods: insert a word, delete a word and search a word.
  * Instead of recursion, the implementation uses iteration.
  * @author Qifan Shi
- * @version 1.1 6/23
+ * @version 1.2 6/29
  * 
  *
  */
@@ -83,11 +83,16 @@ public class Trie {
 	 */
 	public void delete(String word){
 		
+		// corner cases
 		if(word == null || root == null) return;
+//		if(word.length() == 0) {
+//			root.isWord = false;
+//			return;
+//		}
 		
 		// node d marks the "highest node" where we can delete the rest of the path after d
 		TrieNode d = root;
-		int ind = word.charAt(0) - 'a';; // index marks the "cut position" in d
+		int ind = !word.equals("") ? word.charAt(0) - 'a': -1;// index marks the "cut position" in d
 		
 		TrieNode t = root;
 		while(!word.equals("")){
@@ -116,6 +121,11 @@ public class Trie {
 			word = word.substring(1);
 		}
 		
+		if(ind == -1) {
+			root.isWord = false;
+			return;
+		}
+		
 		// check if word is a substring of another one
 		for(int i = 0; i < 26; i++){
 			if(t.children[i] != null){
@@ -138,6 +148,18 @@ public class Trie {
 	public static void main(String[] args){
 		
 		Trie trie = new Trie();
+		
+//		trie.insert(null);
+//		System.out.println(trie.search(null));
+//		trie.delete(null);
+//		trie.delete("");
+//		
+//		System.out.println(trie.search(""));
+//		trie.insert("");
+//		System.out.println(trie.search(""));
+//		trie.delete("");
+//		System.out.println(trie.search(""));
+		
 		
 		// build a trie
 		System.out.println("Building a trie...");
